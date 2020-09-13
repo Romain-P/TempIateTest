@@ -1,5 +1,6 @@
 package com.redpills.correction.framework.domain
 
+import com.redpills.correction.framework.Corrector
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 
@@ -10,12 +11,8 @@ class Correction private constructor() {
         internal var compileScript = String()
 
         fun withCompileScript(script: String) = also { compileScript = script }
-        fun addOutputTask(task: OutputTaskDSL.() -> OutputTaskDSL) = also { tasks.add(task(
-            OutputTaskDSL()
-        ).task) }
-        fun addHttpTasks(task: HttpTaskSetDSL.() -> HttpTaskSetDSL) = also { tasks.add(task(
-            HttpTaskSetDSL()
-        ).task) }
+        fun addOutputTask(task: OutputTaskDSL.() -> OutputTaskDSL) = also { tasks.add(task(OutputTaskDSL()).task) }
+        fun addHttpTasks(task: HttpTaskSetDSL.() -> HttpTaskSetDSL) = also { tasks.add(task(HttpTaskSetDSL()).task) }
 
         class OutputTaskDSL {
             internal val task = OutputCorrectionTask()
@@ -66,8 +63,11 @@ class Correction private constructor() {
     }
 
     companion object {
-        fun builder(builder: BuilderDSL.() -> Unit) = builder(
-            BuilderDSL()
-        )
+        fun newCorrection(builder: BuilderDSL.() -> Unit) {
+            val config = BuilderDSL()
+            builder(config)
+
+            Corrector(config.tasks, config.compileScript).launch()
+        }
     }
 }

@@ -6,7 +6,9 @@ class Test {
 
     @TestOnly
     fun test() {
-        Correction.builder {
+        Correction.newCorrection {
+            withCompileScript("cmake . && cd build && make")
+
             addOutputTask {
                 withLaunchScript("./sample -arg1 -arg2")
                 withHint("test description")
