@@ -35,15 +35,10 @@ class Correction private constructor() {
             fun waitBetweenEachTest(seconds: Long) = also { task.waitBetweenSeconds = seconds }
             fun waitAfterLastTest(seconds: Long) = also { task.waitAfterSeconds = seconds }
 
-            fun addRequest(dsl: HttpTaskDSL.() -> HttpTaskDSL) = also { task.tasks.add(dsl(
-                HttpTaskDSL(
-                    port
-                )
-            ).task) }
+            fun addRequest(dsl: HttpTaskDSL.() -> HttpTaskDSL) = also { task.tasks.add(dsl(HttpTaskDSL(port)).task) }
 
             class HttpTaskDSL(internal val port: Int) {
-                val task = HttpRestCorrectionTask()
-                    .apply { request.port = this@HttpTaskDSL.port }
+                val task = HttpRestCorrectionTask().apply { request.port = this@HttpTaskDSL.port }
 
                 fun withHint(hint: String) = also { task.hint = hint }
                 fun giveMarkOnSuccess(mark: Int) = also { task.mark = mark }
