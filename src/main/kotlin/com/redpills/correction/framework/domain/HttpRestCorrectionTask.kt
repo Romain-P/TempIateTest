@@ -10,7 +10,7 @@ class HttpRestCorrectionTask(
     var request: HttpRequest = HttpRequest(),
     var responseExpected: HttpResponse = HttpResponse()
 ): RuntimeCorrectionTask(hint, mark) {
-    override fun execute(process: Process): TaskResult {
+    override fun execute(process: Process?): TaskResult {
         val response = Http.request(request.method, "http://localhost:${request.port}${request.uri}")
             .setHeaders(request.headers)
             .withBody(request.body)

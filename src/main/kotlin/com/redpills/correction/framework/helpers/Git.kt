@@ -34,7 +34,7 @@ object Git {
 
     fun installOrUpdate(repository: GitRepository): File {
         val uri = parseUri(repository)
-        val localDirectory = File("${File.separator}tmp${File.separator}${uri.projectName}")
+        val localDirectory = File("student")
 
 
         val git = when (localDirectory.exists() && localDirectory.isDirectory) {

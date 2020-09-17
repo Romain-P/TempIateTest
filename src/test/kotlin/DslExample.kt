@@ -1,11 +1,8 @@
 import com.redpills.correction.framework.domain.Correction
-import org.jetbrains.annotations.TestOnly
 import org.springframework.http.HttpMethod
 
-class Test {
-
-    @TestOnly
-    fun test() {
+class DslExample {
+    fun dsl() {
         Correction.newCorrection {
             withCompileScript("cmake . && cd build && make")
 

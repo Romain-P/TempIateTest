@@ -1,6 +1,7 @@
 package com.redpills.correction.framework.domain
 
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
@@ -16,8 +17,8 @@ class OutputCorrectionTask(
 ) : Task {
     var processOutput = String()
 
-    override fun execute(): List<TaskResult> {
-        val proc = Runtime.getRuntime().exec(script)
+    override fun execute(dir: File?): List<TaskResult> {
+        val proc = Runtime.getRuntime().exec(script, null, dir)
 
         val stream = when (this.stream) {
             1 -> proc.inputStream
@@ -43,7 +44,7 @@ class OutputCorrectionTask(
 
             while (reader.readLine().also { line = it } != null)
                 processOutput += when (processOutput.isNotEmpty()) {
-                    true -> "\n $line"
+                    true -> "\n$line"
                     else -> line
                 }
         }).start()

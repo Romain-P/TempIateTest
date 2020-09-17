@@ -34,7 +34,7 @@ class Corrector(
     }
 
     private fun executeTests() {
-        val marks = tasks.flatMap { it.execute() }.map {
+        val marks = tasks.flatMap { it.execute(studentDirectory) }.map {
             val status = when (it.mark) {
                 0 -> WorkerTestResultStateDTO.FAILED
                 else -> WorkerTestResultStateDTO.PASSED
@@ -47,7 +47,7 @@ class Corrector(
     }
 
     private fun compileProject() {
-        //TODO
+        Runtime.getRuntime().exec(compileScript, null, studentDirectory).waitFor()
     }
 
     private fun cloneRepository() {
