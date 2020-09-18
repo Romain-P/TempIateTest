@@ -7,6 +7,7 @@ object Main {
     fun main(args: Array<String>) {
         Correction.newCorrection {
             withCompileScript("echo \"compilation skipped\"")
+            withLinter(Correction.Linter.BASH)
 
             addOutputTask {
                 withLaunchScript("./sample")
