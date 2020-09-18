@@ -5,6 +5,7 @@ class DslExample {
     fun dsl() {
         Correction.newCorrection {
             withCompileScript("cmake . && cd build && make")
+            withLinter(Correction.Linter.BASH)
 
             addOutputTask {
                 withLaunchScript("./sample -arg1 -arg2")

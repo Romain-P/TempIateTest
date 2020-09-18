@@ -1,5 +1,7 @@
 package com.redpills.correction.framework.domain
 
+import java.io.File
+
 class RuntimeCorrectionTaskSet(
     var script: String = "",
     var waitBeforeSeconds: Long = 0,
@@ -7,7 +9,7 @@ class RuntimeCorrectionTaskSet(
     var waitAfterSeconds: Long = 0,
     var tasks: MutableList<RuntimeCorrectionTask> = mutableListOf()
 ): Task {
-    override fun execute(): List<TaskResult> {
+    override fun execute(file: File?): List<TaskResult> {
         val proc = Runtime.getRuntime().exec(script)
 
         Thread.sleep(waitBeforeSeconds * 1000)

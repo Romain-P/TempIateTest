@@ -11,6 +11,7 @@ class Correction private constructor() {
         internal var compileScript = String()
 
         fun withCompileScript(script: String) = also { compileScript = script }
+        fun withLinter(linter: Linter) = also {  }
         fun addOutputTask(task: OutputTaskDSL.() -> OutputTaskDSL) = also { tasks.add(task(OutputTaskDSL()).task) }
         fun addHttpTasks(task: HttpTaskSetDSL.() -> HttpTaskSetDSL) = also { tasks.add(task(HttpTaskSetDSL()).task) }
 
@@ -55,6 +56,14 @@ class Correction private constructor() {
                 }
             }
         }
+    }
+
+    enum class Linter {
+        JAVA,
+        CPP,
+        C,
+        BASH,
+        CSHARP
     }
 
     companion object {
